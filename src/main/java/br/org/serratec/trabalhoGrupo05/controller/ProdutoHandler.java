@@ -26,6 +26,10 @@ public class ProdutoHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<Object>(erros, HttpStatus.NOT_ACCEPTABLE);
 	}
 	
-
+	@Override
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
+            HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
 
 }
