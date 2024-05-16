@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.org.serratec.trabalhoGrupo05.dto.DtoReferencia;
 import br.org.serratec.trabalhoGrupo05.dto.ProdutoDto;
 import br.org.serratec.trabalhoGrupo05.service.ProdutoService;
 import jakarta.validation.Valid;
@@ -40,6 +41,43 @@ public class ProdutoController {
 		}
 		return ResponseEntity.notFound().build();
 	}
+
+	@GetMapping("/valor/acima")
+	public ResponseEntity<List<ProdutoDto>> obterPorValorAcima(@RequestBody String valor){
+		return ResponseEntity.ok(servico.obterValor(Double.valueOf(valor)));
+	}
+	
+	@GetMapping("/valor/abaixo")
+	public ResponseEntity<List<ProdutoDto>> obterPorValorAbaixo(@RequestBody String valor){
+		return ResponseEntity.ok(servico.obterValorAbaixo(Double.valueOf(valor)));
+	}
+	
+	@GetMapping("/valor/entre")
+	public ResponseEntity <List<ProdutoDto>> obterPorValorEntre(@RequestBody DtoReferencia produto){
+			return ResponseEntity.ok(servico.obterPorValorEntre(produto.v1(), produto.v2())); 
+	}
+	
+	@GetMapping("/valor/crescente")
+	public ResponseEntity <List<ProdutoDto>> obterPorValorCrescente(){
+			return ResponseEntity.ok(servico.obterPorValorCrescente()); 
+	}
+
+	@GetMapping("valor_categoria")
+    public ResponseEntity <List<ProdutoDto>> obterPorValorOuCategoria(@RequestBody ProdutoDto produto){
+        return ResponseEntity.ok(servico.obterValorOuCategoria(produto.valor(), produto.categoria()));
+    }
+	
+	@GetMapping("/categoria")
+	public ResponseEntity<List<ProdutoDto>> obterPorCategoria(@RequestBody String categoria){
+		return ResponseEntity.ok(servico.obterCategoria(categoria));
+	}
+	
+	
+	@GetMapping("/nome")
+	public ResponseEntity<List<ProdutoDto>> obterPorNome(@RequestBody String nome){
+		return ResponseEntity.ok(servico.obterNome(nome));
+	}
+	
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
@@ -64,7 +102,6 @@ public class ProdutoController {
 		return ResponseEntity.noContent().build();
 	}
 	
-
 	
 	
 	

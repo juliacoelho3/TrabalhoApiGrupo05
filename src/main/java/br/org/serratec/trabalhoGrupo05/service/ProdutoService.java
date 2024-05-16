@@ -54,6 +54,66 @@ public class ProdutoService {
 		produtoRepositorio.deleteById(id);
 		return true;
 	}
+
+	public List<ProdutoDto> obterValor(Double valor) {
+		
+		return produtoRepositorio.findByValorGreaterThan(valor)
+				.stream()
+				.map(v -> new ProdutoDto(v.getId(), v.getNome(),
+						  v.getCategoria(),v.getValor(), 
+						  v.getDescricao())).toList();
+	}
+
+	public List<ProdutoDto> obterCategoria(String categoria) {
+		
+		return produtoRepositorio.findByCategoriaContainingIgnoreCase(categoria)
+				.stream()
+				.map(c -> new ProdutoDto(c.getId(), c.getNome(),
+						  c.getCategoria(),c.getValor(), 
+						  c.getDescricao())).toList();
+	}
+
+	public List<ProdutoDto> obterNome(String nome) {
+		return produtoRepositorio.findByNomeContainingIgnoreCase(nome)
+				.stream()
+				.map(n -> new ProdutoDto(n.getId(), n.getNome(),
+						  n.getCategoria(),n.getValor(), 
+						  n.getDescricao())).toList();
+	}
+
+	public List<ProdutoDto> obterValorAbaixo(Double valor) {
+		return produtoRepositorio.findByValorLessThan(valor)
+				.stream()
+				.map(v -> new ProdutoDto(v.getId(), v.getNome(),
+						  v.getCategoria(),v.getValor(), 
+						  v.getDescricao())).toList();
+	}
+
+	public List<ProdutoDto> obterPorValorEntre(Double v1, Double v2) {
+		return produtoRepositorio.findByValorBetween(v1, v2)
+				.stream()
+				.map(v -> new ProdutoDto(v.getId(), v.getNome(),
+						  v.getCategoria(),v.getValor(), 
+						  v.getDescricao())).toList();
+	}
+
+	public List<ProdutoDto> obterPorValorCrescente() {
+		return produtoRepositorio.findAllByOrderByValorAsc()
+				.stream()
+				.map(v -> new ProdutoDto(v.getId(), v.getNome(),
+						  v.getCategoria(),v.getValor(), 
+						  v.getDescricao())).toList();
+
+	}
+
+	public List<ProdutoDto> obterValorOuCategoria(Double valor, String categoria) {
+		return produtoRepositorio.findByValorOrCategoriaContainingIgnoreCase(valor, categoria)
+				.stream()
+				.map(v -> new ProdutoDto(v.getId(), v.getNome(),
+						  v.getCategoria(),v.getValor(), 
+						  v.getDescricao())).toList();
+
+	}
 	
 	
 	
